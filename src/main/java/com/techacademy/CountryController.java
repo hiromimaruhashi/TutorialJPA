@@ -37,6 +37,36 @@ public class CountryController {
 
 	}
 
+	@GetMapping("/detail/{code}")
+
+	public String getdetail(@PathVariable("code")String code, Model model) {
+
+		Country country = service.getCountry(code);
+
+		model.addAttribute("country" ,country);
+
+		return "country/detail";
+
+	}
+
+	@GetMapping("/delete/{code}/")
+
+	public String getdelete(@PathVariable("code") String code, Model model) {
+
+		Country country =service.getCountry(code);
+
+		model.addAttribute("country", country);
+
+		return "country/delete";
+	}
+
+
+
+
+
+
+
+
  //追加
 	//詳細画面
 
@@ -103,4 +133,17 @@ public class CountryController {
 
 	}
 
+	@GetMapping("/country/delete/{code}")
+
+	public String deletecode(@PathVariable String deletecode, Model model) {
+
+		model.addAttribute("code",deletecode);
+
+		return "country/delete";
+
 	}
+
+
+	}
+
+
