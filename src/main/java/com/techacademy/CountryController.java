@@ -37,30 +37,6 @@ public class CountryController {
 
 	}
 
-	@GetMapping("/detail/{code}")
-
-	public String getdetail(@PathVariable("code")String code, Model model) {
-
-		Country country = service.getCountry(code);
-
-		model.addAttribute("country" ,country);
-
-		return "country/detail";
-
-	}
-
-	@GetMapping("/delete/{code}/")
-
-	public String getdelete(@PathVariable("code") String code, Model model) {
-
-		Country country =service.getCountry(code);
-
-		model.addAttribute("country", country);
-
-		return "country/delete";
-	}
-
-
 
 
 
@@ -90,22 +66,27 @@ public class CountryController {
 	//更新（追加）
 
 	@PostMapping("/detail")
-
-	public String postCountry(@RequestParam("code") String code, @RequestParam("name") String name,
-
-			@RequestParam("population") int population, Model model) {
-
-		//更新　（追加）
-
-		service.updateCountry(code, name, population);
-
-		//一覧画面にリダイレクト
-
-		return "redirect:/country/list";
+    public String postCountry(@RequestParam("code") String code,
+                              @RequestParam("name") String name,
+                              @RequestParam("population") int population,
+                              Model model) {
+        service.updateCountry(code, name, population);
+        return "redirect:/country/list";
 
 	}
 
 	//  削除画面
+
+	@GetMapping("/delete/{code}/")
+
+	public String deleteCountryForm(@PathVariable("code") String code, Model model) {
+
+		model.addAttribute("code",code);
+
+		return "country/delete";
+
+	}
+
 
 	@GetMapping("/delete")
 
@@ -113,10 +94,11 @@ public class CountryController {
 
 		//country/delete.htmlに画面遷移
 
-		return "country/delete";
-	}
+		model.addAttribute("code", "");
 
-	//削除
+		return "country/delete";
+
+	}
 
 	@PostMapping("/delete")
 
@@ -133,17 +115,8 @@ public class CountryController {
 
 	}
 
-	@GetMapping("/country/delete/{code}")
 
-	public String deletecode(@PathVariable String deletecode, Model model) {
-
-		model.addAttribute("code",deletecode);
-
-		return "country/delete";
-
-	}
 
 
 	}
-
 
